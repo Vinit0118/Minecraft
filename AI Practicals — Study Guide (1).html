@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>AI Practicals — Study Guide</title>
+<style>
+:root{
+  --bg:#f7f7f8; --surface:#fff; --text:#1a1a1a; --muted:#5a5a63;
+  --border:#e3e3e7; --accent:#6d4aff; --accent-ink:#fff;
+  --code-bg:#1e1e2e; --code-text:#e4e4ef; --quirk-bg:#fff7e6; --quirk-border:#f0c36d;
+  --new-bg:#eef6ff; --new-border:#8fb8ff; --table-bg:#fafafa; --work-bg:#f1fbf4; --work-border:#9bd9ad;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#111114; --surface:#1a1a1f; --text:#eaeaef; --muted:#a0a0ac;
+    --border:#2c2c34; --accent:#9b82ff; --accent-ink:#111;
+    --code-bg:#0d0d14; --code-text:#d8d8ea; --quirk-bg:#2a240f; --quirk-border:#6b5620;
+    --new-bg:#122235; --new-border:#2f5fa8; --table-bg:#202026; --work-bg:#102417; --work-border:#2f6b45;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#111114; --surface:#1a1a1f; --text:#eaeaef; --muted:#a0a0ac;
+  --border:#2c2c34; --accent:#9b82ff; --accent-ink:#111;
+  --code-bg:#0d0d14; --code-text:#d8d8ea; --quirk-bg:#2a240f; --quirk-border:#6b5620;
+  --new-bg:#122235; --new-border:#2f5fa8; --table-bg:#202026; --work-bg:#102417; --work-border:#2f6b45;
+  color-scheme: dark;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+header{padding:28px 20px 16px; max-width:900px; margin:0 auto;}
+header h1{font-size:1.5rem;margin:0 0 6px;}
+header p{color:var(--muted);margin:0;font-size:0.95rem;}
+nav{max-width:900px;margin:0 auto 20px;padding:0 20px;display:flex;flex-wrap:wrap;gap:8px;}
+nav a{font-size:0.8rem;padding:6px 10px;border-radius:20px;background:var(--surface);
+  border:1px solid var(--border);color:var(--text);text-decoration:none;}
+nav a:hover{border-color:var(--accent);}
+main{max-width:900px;margin:0 auto;padding:0 20px 60px;}
+section.practical{background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  padding:20px;margin-bottom:22px;scroll-margin-top:16px;}
+section.practical h2{margin:0 0 4px;font-size:1.15rem;}
+section.practical .tag{color:var(--muted);font-size:0.85rem;margin-bottom:14px;}
+.codewrap{position:relative;margin:12px 0;}
+.codewrap pre{background:var(--code-bg);color:var(--code-text);padding:16px;border-radius:10px;
+  overflow-x:auto;font-size:0.82rem;line-height:1.5;margin:0;}
+.copybtn{position:absolute;top:8px;right:8px;background:var(--accent);color:var(--accent-ink);
+  border:none;border-radius:6px;padding:5px 10px;font-size:0.75rem;cursor:pointer;font-weight:600;}
+.copybtn:active{transform:scale(0.96);}
+.quirk{background:var(--quirk-bg);border:1px solid var(--quirk-border);border-radius:10px;
+  padding:12px 14px;margin:10px 0;font-size:0.9rem;}
+.quirk b{display:block;margin-bottom:4px;}
+.newquirk{background:var(--new-bg);border:1px solid var(--new-border);border-radius:10px;
+  padding:12px 14px;margin:10px 0;font-size:0.9rem;}
+.newquirk .badge{display:inline-block;font-size:0.68rem;font-weight:700;letter-spacing:.03em;
+  background:var(--accent);color:var(--accent-ink);padding:2px 7px;border-radius:5px;margin-bottom:6px;}
+.newquirk b{display:block;margin:2px 0 4px;}
+.sectitle{font-size:0.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:16px 0 6px;}
+ul.compact{margin:4px 0;padding-left:20px;font-size:0.88rem;line-height:1.55;}
+ul.compact li{margin-bottom:3px;}
+.vivaq{font-size:0.88rem;margin:8px 0;padding:8px 10px;background:var(--table-bg);border-radius:8px;}
+.vivaq b{display:block;color:var(--accent);margin-bottom:2px;font-size:0.82rem;}
+p.concepts{font-size:0.92rem;line-height:1.65;margin:4px 0;}
+.workbox{background:var(--work-bg);border:1px solid var(--work-border);border-radius:10px;padding:12px 14px;margin:6px 0;}
+.workbox ol{margin:4px 0;padding-left:20px;font-size:0.9rem;line-height:1.7;}
+.workbox ol li{margin-bottom:8px;}
+footer{text-align:center;color:var(--muted);font-size:0.8rem;padding:20px;}
+</style>
+</head>
+<body>
+<header>
+  <h1>AI Practicals — Complete Study Guide</h1>
+  <p>8 practicals · full code with one-click copy · detailed concepts & code walkthroughs · mistakes · viva Q&A · revision sheets · extra quirks</p>
+</header>
+<nav id="nav"></nav>
+<main id="main"></main>
+<footer>Tap any "Copy" button to copy that whole code block.</footer>
+
+<script>
+const data = [
+{
+  id:"p1", title:"1. Simple Reflex Agent — Vacuum Cleaner World",
+  tag:"Condition-action rules · rational behaviour",
+  concepts:"An agent is anything that perceives its environment through sensors and acts through actuators. Here the \"sensors\" are simply knowing which square the agent is in and whether it's dirty, and the \"actuator\" is the action string the agent returns. A simple reflex agent is the weakest design in the agent hierarchy (below model-based, goal-based, utility-based): it keeps no memory of the past and no internal model of the world — it looks only at the current percept (location + status) and matches it against a fixed, hard-coded set of condition-action rules. The vacuum world is deliberately tiny (2 locations) so that reflex rules alone are enough to solve it completely. \"Rational\" here doesn't mean clever — it means this particular rule set happens to maximise the performance measure (clean squares, penalised for wasted movement) for this specific environment, with zero memory or planning required.",
+  working:["simple_reflex_agent(location, status) is a pure function: it takes the two percept values and returns an action string only — it never prints or changes anything itself. This separation means the agent's \"brain\" is logically independent of the world it acts in.",
+    "run_environment() owns the actual world state: environment = {'A':'Dirty','B':'Dirty'} plus a location pointer. Each loop pass does three things in order — read status = environment[location] (the agent perceiving), call the agent function to decide an action, then apply that action back onto the environment dict (the agent acting).",
+    "The if/elif chain after the decision turns the abstract action string into a concrete state change: 'Suck' flips the current cell to 'Clean'; 'Move Right' / 'Move Left' just reassigns location — nothing else in the dict changes on a move.",
+    "After every step, a small scan over environment.values() checks whether everything is now 'Clean'. If so, it prints the completion message and break exits the for loop immediately — which is why range(6) almost never actually runs all 6 iterations; it's just a safe ceiling."],
+  code:`def simple_reflex_agent(location, status):
+    if status == 'Dirty':
+        return 'Suck'
+    elif location == 'A':
+        return 'Move Right'
+    else:
+        return 'Move Left'
+
+def run_environment():
+    environment = {'A': 'Dirty', 'B': 'Dirty'}
+    location = 'A'
+    print("Initial Environment:", environment)
+    print()
+    for step in range(6):
+        status = environment[location]
+        action = simple_reflex_agent(location, status)
+        print("Step", step + 1)
+        print(" Location :", location)
+        print(" Status :", status)
+        print(" Action :", action)
+        if action == 'Suck':
+            environment[location] = 'Clean'
+        elif action == 'Move Right':
+            location = 'B'
+        elif action == 'Move Left':
+            location = 'A'
+        print(" Environment after action:", environment)
+        print()
+        all_clean = True
+        for key in environment:
+            if environment[key] != 'Clean':
+                all_clean = False
+        if all_clean:
+            print("All locations are clean. Task complete.")
+            break
+
+run_environment()`,
+  known:[["Why range(6) and not range(3)?","6 is a safe upper bound — worst case is 3 steps — so the loop never hangs on a logic error; break exits early anyway."],
+  ["Why a dictionary instead of a list?","Lets the location name ('A'/'B') double as the key, instead of needing an index-to-location mapping."]],
+  newq:["Why is 'Dirty' checked before location at all, instead of checking location first?","Order encodes priority: cleaning always outranks moving. If location were checked first, the agent could move away from a dirty cell without ever cleaning it — the rule order is itself part of the agent's rationality, not just code style."],
+  mistakes:["Confusing percept (what agent sees) with action (what agent does).","Forgetting to update the environment after each action.","Not terminating the loop once the environment is fully clean.","Mixing agent logic with the environment loop instead of separating them."],
+  viva:[["What is a Simple Reflex Agent?","Acts on the current percept only, using fixed condition-action rules; has no memory."],
+  ["What is a Percept?","The current sensor input the agent receives from its environment."],
+  ["What is Rational Behaviour?","Choosing the action that maximises the performance measure given the current percept."],
+  ["Limitation of a Simple Reflex Agent?","No memory — fails in partially observable environments where the current percept alone isn't enough."],
+  ["Performance measure here?","Number of clean squares over time, penalised for unnecessary movement."]],
+  revision:["Senses: current location + status.","Dirty → Suck.","Clean & at A → Move Right.","Clean & at B → Move Left.","Update environment after every action.","Stop when both locations are Clean."]
+},
+{
+  id:"p2", title:"2. Tower of Hanoi — State Space Search",
+  tag:"Recursion · base case · 2^N − 1",
+  concepts:"State space search means defining a problem as all possible configurations (states) and finding a sequence of legal moves from the initial state to the goal state. Tower of Hanoi is the classic teaching example because its state space can be searched not by exploring it explicitly, but by recursion that mirrors divide-and-conquer: solving \"move N disks\" is defined entirely in terms of the smaller subproblem \"move N-1 disks\" — there is no separate algorithm for the big case, only a recursive restatement of it in terms of itself. The recursion tree produces exactly 2^N − 1 printed moves because every call for n>1 spawns exactly two further recursive calls plus one directly printed move, and this branching factor is what makes the problem exponential rather than linear.",
+  working:["Each call to tower_of_hanoi(n, source, destination, auxiliary) performs exactly three actions in order: recurse on n-1 disks moving source→auxiliary (using destination as the temporary holding peg), print the direct move of disk n from source→destination, then recurse on n-1 disks moving auxiliary→destination (now using source as the temporary peg).",
+    "The base case n==1 is the only place a disk move is ever printed without further recursion underneath it — every larger call eventually bottoms out at many of these base cases.",
+    "Trace for n=2: tower_of_hanoi(2,S,D,A) first calls tower_of_hanoi(1,S,A,D) → prints \"disk 1 S→A\"; then prints \"disk 2 S→D\" itself; then calls tower_of_hanoi(1,A,D,S) → prints \"disk 1 A→D\". Three total moves, matching 2^2 − 1 = 3.",
+    "The recursion never explicitly tracks \"which peg is currently free\" as a separate variable — it's implicit purely in which parameter is passed into which argument slot on each call, which is exactly why swapping the auxiliary/destination argument order is the single most common bug students make."],
+  code:`def tower_of_hanoi(n, source, destination, auxiliary):
+    if n == 1:
+        print("Move disk 1 from", source, "to", destination)
+        return
+    tower_of_hanoi(n - 1, source, auxiliary, destination)
+    print("Move disk", n, "from", source, "to", destination)
+    tower_of_hanoi(n - 1, auxiliary, destination, source)
+
+n = int(input("Enter number of disks: "))
+print()
+print("Steps to solve Tower of Hanoi with", n, "disks:")
+print()
+tower_of_hanoi(n, 'Source', 'Destination', 'Auxiliary')
+print()
+total_moves = (2 ** n) - 1
+print("Total minimum moves required:", total_moves)`,
+  known:[["Why do auxiliary/destination roles swap between the two recursive calls?","First call moves N-1 disks using Destination as helper; the third moves them back using Source as helper — same disks, different peg roles."],
+  ["Why pass peg names as strings, not 1/2/3?","Output stays human-readable ('Source' not '1') and strings can't accidentally be used in arithmetic."]],
+  newq:["Why compute total_moves = 2**n - 1 separately instead of counting the prints inside the function?","Keeps the recursive function doing one job — producing the move sequence — rather than also tracking a counter. The closed-form formula is also an independent check: if your printed move count doesn't match 2^n − 1, you know the recursion has a bug, which you wouldn't catch if the count came from the same code you're trying to verify."],
+  mistakes:["Swapping the Auxiliary and Destination parameters in the recursive calls.","Forgetting the base case when N equals 1.","Not understanding why N-1 disks must move before the largest disk.","Using an iterative approach when recursion is expected."],
+  viva:[["What is State Space?","All possible configurations a problem can be in, from initial to goal state."],
+  ["Base case?","N == 1 — move that single disk directly, no further recursion."],
+  ["Minimum moves for N disks?","2^N − 1. For 3 disks: 7. For 4 disks: 15."],
+  ["Why recursion?","The problem decomposes into identical smaller subproblems (move N-1 disks first)."],
+  ["Time complexity?","O(2^N) — exponential; moves double with each extra disk."]],
+  revision:["3 pegs: Source, Destination, Auxiliary.","Base case: N==1 → move disk directly.","Move N-1: Source→Auxiliary.","Move disk N: Source→Destination.","Move N-1: Auxiliary→Destination.","Minimum moves = 2^N − 1; complexity O(2^N)."]
+},
+{
+  id:"p3", title:"3. Sudoku Solver — Backtracking & Constraint Propagation",
+  tag:"CSP · pruning · backtracking",
+  concepts:"This is a Constraint Satisfaction Problem solved by depth-first search with pruning. Variables are the 81 cells, domains are the digits 1–9, and constraints require each row, column, and 3×3 box to contain every digit exactly once. The board is one single shared mutable list passed by reference through every recursive call — this is essential, not incidental: all calls read and write the same board object, so a digit placed deep inside the recursion is instantly visible to every other call, and undoing it (setting the cell back to 0) is equally instant and global. This shared-mutable-state design is what makes simple backtracking possible without having to copy and return a new board at every step.",
+  working:["solve(board) scans the grid row by row, column by column, looking for the first cell still equal to 0. If no such cell exists, every cell already holds a valid digit, so it returns True immediately — this is the \"success\" signal that will get passed back up through every pending recursive call on the stack.",
+    "For that one empty cell, it tries digits 1 through 9 in order. For each candidate it calls is_valid(board,row,col,num), which checks three independent regions — the full row, the full column, and the 3×3 box (computed from start_row = 3*(row//3) and start_col = 3*(col//3)) — and the digit is only accepted if it is absent from all three.",
+    "If a digit is valid, the code tentatively places it and recurses — effectively saying \"assume this is correct, now go solve everything that remains.\" If that recursive call eventually returns True, the entire call chain returns True without ever touching this cell again.",
+    "If the recursive call instead returns False, the digit is undone (board[row][col] = 0) and the loop moves on to try the next digit — this undo-then-retry step is literally what the word \"backtracking\" refers to.",
+    "If all nine digits fail for a cell, the function returns False, which forces whichever call placed the previous digit (one level up the stack) to also undo its choice and try its own next option — failure propagates backward exactly one placement at a time, which is why a single wrong early guess can cause a long chain of undo operations before the solver recovers."],
+  code:`def is_valid(board, row, col, num):
+    for c in range(9):
+        if board[row][c] == num:
+            return False
+    for r in range(9):
+        if board[r][col] == num:
+            return False
+    start_row = 3 * (row // 3)
+    start_col = 3 * (col // 3)
+    for r in range(start_row, start_row + 3):
+        for c in range(start_col, start_col + 3):
+            if board[r][c] == num:
+                return False
+    return True
+
+def solve(board):
+    for row in range(9):
+        for col in range(9):
+            if board[row][col] == 0:
+                for num in range(1, 10):
+                    if is_valid(board, row, col, num):
+                        board[row][col] = num
+                        if solve(board):
+                            return True
+                        board[row][col] = 0
+                return False
+    return True`,
+  known:[["Why start_row = 3 * (row // 3) and not just row // 3?","row // 3 gives the box index (0,1,2), not the actual starting row — multiplying by 3 converts it back."],
+  ["Why return True when no empty cell is found?","Signals success back through the entire recursive chain; returning False/None here would make every call think it failed."]],
+  newq:["The title says 'backtracking and constraint propagation' — but is_valid() only checks before placing a digit. Where's the actual propagation?","True constraint propagation (AC-3, forward checking) would shrink the remaining candidate values for every empty cell ahead of time, before you even try one. This code only checks validity at the moment of placement, which prunes a branch once you're already standing in it. So, accurately, this is backtracking with local pruning, not full propagation — say exactly that distinction in viva; examiners frequently ask it because the practical's own name oversells what the code does."],
+  mistakes:["Forgetting to reset the cell back to 0 when backtracking.","Only checking one or two constraints instead of row, column AND box.","Wrong box start index — must be 3*(row//3), 3*(col//3).","Returning True without verifying all empty cells are filled."],
+  viva:[["What is Backtracking?","Tries options one by one, undoes a choice at a dead end, then tries the next."],
+  ["What is Constraint Propagation?","Using constraints to eliminate impossible values before attempting them."],
+  ["What does 0 represent?","An empty cell to be filled 1–9."],
+  ["Time complexity?","Worst case O(9^empty cells); constraint checking reduces this a lot in practice."],
+  ["Backtracking vs Brute Force?","Brute force tries every combination; backtracking abandons paths that already violate a constraint."]],
+  revision:["0 = empty cell.","is_valid checks row, column, and 3×3 box.","Box start = 3*(row//3), 3*(col//3).","solve: find empty → try 1–9 → recurse → backtrack if fail.","Backtrack = reset cell to 0, try next digit.","Return True when no empty cell remains."]
+},
+{
+  id:"p4", title:"4. A* Search — 8 Puzzle Problem",
+  tag:"f(n)=g(n)+h(n) · Manhattan distance · heapq",
+  concepts:"A* is best-first search guided by the formula f(n)=g(n)+h(n), where g(n) is the actual cost already paid to reach state n, and h(n) is an estimate of the remaining cost to the goal. What distinguishes it from plain cost-based search (like Dijkstra) is that admissible heuristic h(n) — one that never overestimates the true remaining cost — which lets A* skip exploring states that provably can't beat the current best path, without ever sacrificing the guarantee of finding the optimal solution. Manhattan distance (sum of horizontal + vertical tile displacements) is used here specifically because it is provably admissible for the 8-puzzle: tiles can only move orthogonally, never diagonally, so this distance can never overstate the true number of moves needed.",
+  working:["States are represented as 3×3 tuples-of-tuples rather than lists specifically because tuples are immutable and hashable — this lets them be stored directly inside the closed set and compared for equality in O(1), which a list could never do.",
+    "open_list is a binary heap of (f, g, state, path) tuples. heapq.heappop always returns the tuple with the smallest first element (f); if two tuples tie on f, Python compares the next element (g) to break the tie, preferring the state that made more concrete progress.",
+    "Main loop: pop the best-ranked state. If it equals goal_state, the search is over — g at that point is exactly the number of moves made. Otherwise, if this exact state is already in closed, it's skipped outright (this is called lazy deletion — stale duplicate heap entries for an already-explored state are simply ignored rather than physically removed from the heap, which heapq doesn't support efficiently anyway).",
+    "Otherwise the state is marked explored and get_neighbors generates its up-to-4 neighbours purely by locating the blank tile (0) and swapping it with each in-bounds adjacent cell — this single operation naturally encodes all legal 8-puzzle moves (sliding a tile into the blank is the same as swapping blank with that tile).",
+    "For every neighbour not already closed: new_g = g+1 (exactly one more move than the parent), new_h = manhattan_distance(neighbor, goal), and the triple (new_g+new_h, new_g, neighbor, path+[neighbor]) is pushed back onto the heap. path+[neighbor] builds a brand-new list rather than mutating the old one, which is what allows many different heap entries to safely carry independent route histories without corrupting each other's paths."],
+  code:`import heapq
+
+def manhattan_distance(state, goal):
+    total = 0
+    for i in range(3):
+        for j in range(3):
+            value = state[i][j]
+            if value != 0:
+                for gi in range(3):
+                    for gj in range(3):
+                        if goal[gi][gj] == value:
+                            total = total + abs(i - gi) + abs(j - gj)
+    return total
+
+def get_neighbors(state):
+    neighbors = []
+    state_list = [list(row) for row in state]
+    blank_r = blank_c = 0
+    for i in range(3):
+        for j in range(3):
+            if state_list[i][j] == 0:
+                blank_r, blank_c = i, j
+    moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    for dr, dc in moves:
+        new_r, new_c = blank_r + dr, blank_c + dc
+        if 0 <= new_r < 3 and 0 <= new_c < 3:
+            new_state = [row[:] for row in state_list]
+            new_state[blank_r][blank_c], new_state[new_r][new_c] = \\
+                new_state[new_r][new_c], new_state[blank_r][blank_c]
+            neighbors.append(tuple(tuple(row) for row in new_state))
+    return neighbors
+
+def a_star(start, goal):
+    start_state = tuple(tuple(row) for row in start)
+    goal_state = tuple(tuple(row) for row in goal)
+    h = manhattan_distance(start_state, goal_state)
+    open_list = []
+    heapq.heappush(open_list, (h, 0, start_state, [start_state]))
+    closed = set()
+    while open_list:
+        f, g, current, path = heapq.heappop(open_list)
+        if current == goal_state:
+            print("Goal reached in", g, "moves!")
+            return
+        if current in closed:
+            continue
+        closed.add(current)
+        for neighbor in get_neighbors(current):
+            if neighbor not in closed:
+                new_g = g + 1
+                new_h = manhattan_distance(neighbor, goal_state)
+                heapq.heappush(open_list, (new_g + new_h, new_g, neighbor, path + [neighbor]))
+    print("No solution found.")`,
+  known:[["Why heapq instead of list + sort()?","heappush/heappop are O(log n); sorting after every insert is O(n log n)."],
+  ["Why convert state to a tuple before using a set?","Sets need hashable elements; lists are mutable and unhashable, tuples aren't."]],
+  newq:["Why store the full path inside every heap entry instead of a parent-pointer map (the usual textbook way)?","It trades memory for simplicity. A parent-map needs a second backward pass once the goal is found to reconstruct the path; carrying the path forward avoids that pass entirely. For an 8-puzzle, where the state space explored is small, the extra memory is negligible — so the simpler approach wins for a lab exercise, even though a parent-map scales better for huge search spaces."],
+  mistakes:["Confusing g(n) and h(n).","Forgetting to add explored states to the closed list — causes repeated exploration.","Using a plain list instead of heapq.","Using Euclidean distance instead of Manhattan.","Not converting state to a tuple before using a set."],
+  viva:[["What is A* Search?","Informed search finding the optimal path via f(n)=g(n)+h(n)."],
+  ["What is an admissible heuristic?","One that never overestimates the true cost; guarantees A* finds the optimal solution."],
+  ["Why Manhattan over Euclidean?","Tiles move only horizontally/vertically, never diagonally."],
+  ["What is the open list?","A min-heap of discovered-but-unexplored states, ordered by f."],
+  ["What is the closed list?","A set of already-explored states, never re-added to the open list."]],
+  revision:["f(n) = g(n) + h(n).","g(n) = moves from start to current.","h(n) = Manhattan distance to goal.","Open list = min-heap; closed list = explored set.","Blank tile = 0; state stored as tuple so it's hashable."]
+},
+{
+  id:"p5", title:"5. Intelligent Agent — Number Guessing with Feedback",
+  tag:"Binary search as agent policy",
+  concepts:"The agent's \"intelligence\" here is entirely its search strategy, not any learning — it maintains a shrinking interval [low, high] that is guaranteed to contain the answer, and always queries the exact midpoint of that interval. This is provably the strategy that minimises the worst-case number of guesses against an opponent who answers honestly: every guess, right or wrong, halves the number of remaining candidates, which is why the environment is classified as fully observable, deterministic, episodic, discrete, and single-agent — there is no hidden information and no randomness in how feedback is generated.",
+  working:["Each loop iteration computes guess = (low+high)//2, prints it, then reads the human's one-letter reply and uses it to collapse the valid range: 'H' means the true number is strictly above guess, so the new lower bound excludes guess entirely by setting low = guess + 1; 'L' is the exact mirror on the high side (high = guess - 1).",
+    "The loop condition while low <= high is the actual termination guarantee — the interval shrinks by roughly half every pass, so it collapses to a single remaining candidate (low == high) within about log2(100) ≈ 7 iterations, and 'C' can only be the truthful response at or before that point.",
+    "Invalid input is handled without touching the search state at all — low and high are left exactly as they were, and only the attempts counter is corrected back down, so a stray keystroke costs nothing except one wasted printed line."],
+  code:`def agent_guesses():
+    low = 1
+    high = 100
+    attempts = 0
+    print("Think of a number between 1 and 100.")
+    while low <= high:
+        guess = (low + high) // 2
+        attempts = attempts + 1
+        print("Attempt", attempts, ": Is your number", guess, "?")
+        response = input("Your response (H / L / C): ").strip().upper()
+        if response == 'C':
+            print("Agent guessed your number correctly in", attempts, "attempts!")
+            return
+        elif response == 'H':
+            low = guess + 1
+        elif response == 'L':
+            high = guess - 1
+        else:
+            print("Invalid input. Please enter H, L, or C.")
+            attempts = attempts - 1
+
+agent_guesses()`,
+  known:[["Why (low+high)//2 and not /2?","A guess must be a whole number; // avoids a float like 50.0."],
+  ["Why while low <= high, not low < high?","When low == high there is exactly one candidate left, and it must be checked."]],
+  newq:["Why increment attempts before validating the response, then decrement it back on invalid input?","It keeps exactly one counter-update line per loop pass instead of branching the increment into every response case separately. The decrement is a cheap 'undo' rather than restructuring the flow — not the most elegant order, but it avoids duplicating 'attempts = attempts + 1' across three branches. A cleaner version would validate input first, but this is the kind of shortcut examiners sometimes probe with 'why not check validity first?'"],
+  mistakes:["Random guessing instead of binary search.","Off-by-one: Higher should set low = guess + 1, not low = guess.","Off-by-one: Lower should set high = guess - 1, not high = guess.","Not handling invalid input gracefully."],
+  viva:[["What makes this agent intelligent?","It uses feedback to eliminate half the remaining possibilities each guess, via binary search."],
+  ["Max guesses for 1–100?","7 — log2(100) ≈ 6.64, rounds up."],
+  ["Search strategy?","Binary search — always the midpoint of the remaining valid range."],
+  ["Environment type?","Fully observable, deterministic, episodic, discrete, single-agent."]],
+  revision:["low=1, high=100 initially.","guess = (low+high)//2.","H → low = guess+1.","L → high = guess-1.","C → done, print attempts."]
+},
+{
+  id:"p6", title:"6. Chatbot — Predefined Rules & Pattern Matching",
+  tag:"re.search · regex alternation · rule priority",
+  concepts:"This is the \"good old-fashioned AI\" approach to conversation — no statistics, no training data, just a hand-written lookup table mapping regex patterns to canned responses, checked in a fixed priority order. Intelligence here is an illusion created entirely by how comprehensively the patterns list covers likely phrasings of each intent — the program itself has zero understanding of language; re.search just checks whether a substring resembling the pattern appears anywhere in the input.",
+  working:["match_response() takes the user's raw text and walks the patterns list from top to bottom; the first tuple whose regex matches anywhere in the input (case-insensitively, via re.IGNORECASE) wins immediately — its response is returned right there, and every pattern listed after it is never even evaluated for that turn.",
+    "If the loop finishes without any pattern matching, default_response is returned instead of None — this fallback is precisely what stops the subsequent print(\"Bot:\", response) call from ever trying to print None or crashing.",
+    "chat() is a separate, independent while True loop: it keeps calling match_response() on each new line typed. After printing the bot's reply, it runs a second, completely separate re.search for the goodbye words against the raw input — this duplicate check exists purely to decide whether to break the loop, since match_response()'s only job was producing text, never controlling the conversation's flow."],
+  code:`import re
+
+patterns = [
+    ('hello|hi|hey', 'Hello! Welcome to College Enquiry. How can I help you?'),
+    ('timing|time|hours|open|close', 'College timings are 9:00 AM to 5:00 PM, Monday to Saturday.'),
+    ('admission|admissions|enroll|enrollment|apply', 'Admissions are open from June to August.'),
+    ('department|departments|course|courses|branch', 'We offer departments in CS, IT, Mechanical, Civil, and Electronics.'),
+    ('bye|goodbye|exit|quit|thank', 'Thank you for visiting College Enquiry. Goodbye!'),
+]
+default_response = "I'm sorry, I don't have that information."
+
+def match_response(user_input):
+    for pattern, response in patterns:
+        if re.search(pattern, user_input, re.IGNORECASE):
+            return response
+    return default_response
+
+def chat():
+    print("College Enquiry Chatbot — type 'bye' to exit.")
+    while True:
+        user_input = input("You: ").strip()
+        if user_input == "":
+            continue
+        response = match_response(user_input)
+        print("Bot:", response)
+        if re.search('bye|goodbye|exit|quit', user_input, re.IGNORECASE):
+            break
+
+chat()`,
+  known:[["Why re.search() and not re.match()?","re.match() only checks the start of the string; natural sentences rarely begin with the keyword."],
+  ["Why a list of tuples instead of a dict for patterns?","Preserves order, so the first matching rule wins when two patterns could both match."]],
+  newq:["Why bundle synonyms into one regex with | instead of giving each synonym its own tuple?","It keeps the intent-to-response mapping strictly 1:1 — one rule, one response — which mirrors how real intent-matching systems are structured, and means the loop scans fewer tuples per turn. If 'hello' and 'hi' were separate tuples with different responses, the bot's reply would depend on which synonym the examiner happened to type, which looks like a bug rather than a design choice."],
+  mistakes:["Forgetting re.IGNORECASE — won't match 'Hello' if pattern has 'hello'.","No default response — crashes when nothing matches.","Using == instead of re.search() — exact match fails on natural sentences.","Not stripping whitespace from input.","Forgetting the exit condition — program runs forever."],
+  viva:[["What is a Rule-Based Chatbot?","Fixed predefined pattern-response pairs; does not learn from interactions."],
+  ["What does re.search() do?","Searches the whole string for the pattern; returns a match object or None."],
+  ["What is re.IGNORECASE?","Makes matching case-insensitive."],
+  ["re.search() vs re.match()?","search scans anywhere; match only checks the start."]],
+  revision:["import re.","patterns = list of (regex, response) tuples.","Loop, return response for first match.","Always keep a default_response.","Exit on bye/exit/quit.","Only the patterns list changes per application."]
+},
+{
+  id:"p7", title:"7. BFS — Robot Path Planning",
+  tag:"Queue (FIFO) · shortest path guarantee",
+  concepts:"BFS treats the grid as an unweighted graph where every free cell is a node connected to its up-to-4 free neighbours. Because every edge represents the exact same cost (one step), the very first time BFS reaches any given cell, it is guaranteed to have arrived there via the shortest possible route — this single fact is the entire reason BFS, rather than DFS, is the correct choice whenever an optimal (shortest) path is actually required.",
+  working:["The two if-checks at the top reject an impossible task immediately — a blocked start or goal — before any of the actual search machinery (queue, visited set) is even set up.",
+    "The queue holds (cell, path-so-far) pairs, seeded with the start cell and its one-element path; visited is seeded with the start too. Crucially, visited is updated at the moment a cell is enqueued, not when it's dequeued — this guarantees a given cell can never be placed into the queue twice, no matter how many different already-queued neighbours would otherwise try to reach it.",
+    "Each pop takes the oldest-queued cell via popleft() (true FIFO order), checks whether it's the goal, and if not, expands its four neighbours. This strict oldest-first ordering is exactly what makes BFS explore the grid in expanding rings of distance from the start — completing one full ring of distance d before any cell at distance d+1 is even looked at.",
+    "The path needs no separate reconstruction step afterwards (unlike A* with a parent-map): path + [new_cell] is carried along inside the queue entry itself the entire time, so the moment the goal cell is dequeued, its accompanying path is already the complete, correct shortest route."],
+  code:`from collections import deque
+
+def bfs_path_planning(grid, start, goal):
+    rows, cols = len(grid), len(grid[0])
+    if grid[start[0]][start[1]] == 1:
+        print("Start cell is blocked.")
+        return None
+    if grid[goal[0]][goal[1]] == 1:
+        print("Goal cell is blocked.")
+        return None
+    queue = deque()
+    queue.append((start, [start]))
+    visited = {start}
+    moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+    while queue:
+        current_cell, path = queue.popleft()
+        r, c = current_cell
+        if current_cell == goal:
+            return path
+        for dr, dc in moves:
+            new_cell = (r + dr, c + dc)
+            nr, nc = new_cell
+            if 0 <= nr < rows and 0 <= nc < cols:
+                if grid[nr][nc] == 0 and new_cell not in visited:
+                    visited.add(new_cell)
+                    queue.append((new_cell, path + [new_cell]))
+    return None`,
+  known:[["Why deque instead of a plain list?","list.pop(0) is O(n); deque.popleft() is O(1)."],
+  ["Why mark visited at enqueue time, not dequeue time?","Marking only at dequeue lets the same cell be enqueued multiple times before it's processed, wasting memory and time."]],
+  newq:["Why explicitly check if start or goal is blocked before the BFS loop even runs, instead of letting BFS just fail naturally?","If the start is blocked and you skip the check, the while loop simply runs zero times and returns None with zero explanation of why. The explicit check fails fast with a specific, readable message — which matters far more in a demo or viva (where the examiner wants to see you reasoned about edge cases) than in production, where the caller usually just checks for a None return."],
+  mistakes:["Using a stack instead of a queue (that becomes DFS).","Not marking cells visited before enqueueing — duplicates.","Forgetting boundary checks.","Not checking if start/goal is an obstacle.","Returning the visited set instead of the actual path."],
+  viva:[["What is BFS?","Explores nodes level by level using a queue."],
+  ["Why does BFS guarantee shortest path?","First time the destination is reached, it's via the fewest possible steps."],
+  ["Data structure?","Queue (FIFO); deque used because popleft() is O(1)."],
+  ["What does deque mean?","Double-ended queue — efficient append/pop at both ends."]],
+  revision:["0 = free, 1 = obstacle.","Use deque.","Queue stores (cell, path) pairs.","visited set prevents revisits.","4 moves: up/down/left/right.","Return path when goal reached, else None."]
+},
+{
+  id:"p8", title:"8. DFS — Maze Solving",
+  tag:"Recursion as stack · backtracking",
+  concepts:"DFS explores the same kind of grid as BFS but the opposite way — it commits fully to one direction and only reconsiders when it provably can go no further. This implementation uses Python's own call stack via recursion rather than an explicit stack object, which is simpler to write but means the maximum maze depth DFS can handle is limited by Python's recursion limit (around 1000 by default). Unlike BFS, DFS is complete (it will find a path if one exists in a finite maze) but not optimal — it finds a valid path, not necessarily the shortest one.",
+  working:["The inner function dfs(r,c) is nested inside dfs_maze and closes over the outer visited set and path list — meaning every recursive call shares exactly one visited set and one path list rather than each call getting its own private copy. This shared state is what makes the \"add on the way down, pop() on the way back up if it failed\" pattern actually work.",
+    "The order of checks inside dfs matters: bounds are checked first, then wall/visited — it must rule out an out-of-range r or c before ever trying to index into maze[r][c], or Python would raise an index error.",
+    "On success — the current cell equals goal — the function returns True immediately without ever calling path.pop(), so the cell stays in path permanently, and that True value propagates straight back up through every waiting caller in the recursion chain without any of them running their own pop().",
+    "On a dead end — all four recursive dfs() calls for this cell returned False — the function pops its own cell off path (undoing the push made when this call started) and returns False itself. That False is exactly what signals the parent call to try its own next direction with a clean, correctly-sized path."],
+  code:`def dfs_maze(maze, start, goal):
+    rows, cols = len(maze), len(maze[0])
+    visited = set()
+    path = []
+
+    def dfs(r, c):
+        if r < 0 or r >= rows or c < 0 or c >= cols:
+            return False
+        if maze[r][c] == 1 or (r, c) in visited:
+            return False
+        visited.add((r, c))
+        path.append((r, c))
+        if (r, c) == goal:
+            return True
+        moves = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        for dr, dc in moves:
+            if dfs(r + dr, c + dc):
+                return True
+        path.pop()
+        return False
+
+    if dfs(start[0], start[1]):
+        return path
+    return None`,
+  known:[["Why does path.pop() sit after the whole for-loop, not inside it?","It should only fire once all four directions have failed — inside the loop it would discard the cell after just one failed try."],
+  ["Why mark visited before the recursive call, not after it returns?","Marking after would let the same cell be revisited before the outer call ever marks it, causing infinite recursion."]],
+  newq:["Why does the fixed direction order (up, down, left, right) matter if DFS finds 'a path' either way?","DFS doesn't guarantee the shortest path — only a valid one — so the order you try directions in determines exactly which path gets found first when several exist. Swap the order and the output path can look completely different even though correctness is untouched. This explains the common confusion of 'my code is correct but my printed path doesn't match the sample output' — it's the move order, not a bug."],
+  mistakes:["Forgetting path.pop() when backtracking.","Not marking visited before recursing — infinite recursion.","Using a queue instead of recursion (becomes BFS).","Forgetting boundary checks.","Not handling the no-path case (should return None)."],
+  viva:[["What is DFS?","Explores as deep as possible along one branch before backtracking."],
+  ["Data structure?","A stack — Last In First Out; recursion uses the call stack."],
+  ["Does DFS guarantee shortest path?","No — it finds a valid path, not necessarily the shortest."],
+  ["What is backtracking in DFS?","Removing the last cell and returning False when a path hits a dead end."],
+  ["When use DFS over BFS?","When memory is limited, or any valid path is acceptable."]],
+  revision:["0 = open, 1 = wall.","Recursive DFS uses the call stack.","visited set prevents infinite loops.","path list tracks the current route.","pop() on backtrack; return True/False."]
+},
+];
+
+const nav = document.getElementById('nav');
+const main = document.getElementById('main');
+
+function addList(parent, title, items){
+  const st = document.createElement('div');
+  st.className = 'sectitle';
+  st.textContent = title;
+  parent.appendChild(st);
+  const ul = document.createElement('ul');
+  ul.className = 'compact';
+  items.forEach(it => {
+    const li = document.createElement('li');
+    li.textContent = it;
+    ul.appendChild(li);
+  });
+  parent.appendChild(ul);
+}
+
+function addViva(parent, title, items){
+  const st = document.createElement('div');
+  st.className = 'sectitle';
+  st.textContent = title;
+  parent.appendChild(st);
+  items.forEach(([q,a]) => {
+    const d = document.createElement('div');
+    d.className = 'vivaq';
+    d.innerHTML = '<b>Q: ' + q + '</b>' + a;
+    parent.appendChild(d);
+  });
+}
+
+data.forEach(p => {
+  const a = document.createElement('a');
+  a.href = '#' + p.id;
+  a.textContent = p.title.split('—')[0].trim();
+  nav.appendChild(a);
+
+  const sec = document.createElement('section');
+  sec.className = 'practical';
+  sec.id = p.id;
+
+  const h2 = document.createElement('h2');
+  h2.textContent = p.title;
+  sec.appendChild(h2);
+
+  const tag = document.createElement('div');
+  tag.className = 'tag';
+  tag.textContent = p.tag;
+  sec.appendChild(tag);
+
+  const st0 = document.createElement('div');
+  st0.className = 'sectitle';
+  st0.textContent = 'Core concepts';
+  sec.appendChild(st0);
+  const cp = document.createElement('p');
+  cp.className = 'concepts';
+  cp.textContent = p.concepts;
+  sec.appendChild(cp);
+
+  const codewrap = document.createElement('div');
+  codewrap.className = 'codewrap';
+  const pre = document.createElement('pre');
+  const codeEl = document.createElement('code');
+  codeEl.textContent = p.code;
+  pre.appendChild(codeEl);
+  const btn = document.createElement('button');
+  btn.className = 'copybtn';
+  btn.textContent = 'Copy';
+  btn.addEventListener('click', () => {
+    const text = p.code;
+    const done = () => { btn.textContent = 'Copied!'; setTimeout(()=>btn.textContent='Copy', 1400); };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+    } else {
+      fallbackCopy(text, done);
+    }
+  });
+  codewrap.appendChild(pre);
+  codewrap.appendChild(btn);
+  sec.appendChild(codewrap);
+
+  const st05 = document.createElement('div');
+  st05.className = 'sectitle';
+  st05.textContent = 'How the code works, step by step';
+  sec.appendChild(st05);
+  const wb = document.createElement('div');
+  wb.className = 'workbox';
+  const ol = document.createElement('ol');
+  p.working.forEach(step => {
+    const li = document.createElement('li');
+    li.textContent = step;
+    ol.appendChild(li);
+  });
+  wb.appendChild(ol);
+  sec.appendChild(wb);
+
+  const st1 = document.createElement('div');
+  st1.className = 'sectitle';
+  st1.textContent = 'Already-covered design decisions';
+  sec.appendChild(st1);
+  p.known.forEach(([q,aAns]) => {
+    const d = document.createElement('div');
+    d.className = 'quirk';
+    d.innerHTML = '<b>' + q + '</b>' + aAns;
+    sec.appendChild(d);
+  });
+
+  const st2 = document.createElement('div');
+  st2.className = 'sectitle';
+  st2.textContent = 'New — extra quirk worth knowing';
+  sec.appendChild(st2);
+  const nd = document.createElement('div');
+  nd.className = 'newquirk';
+  nd.innerHTML = '<span class="badge">NEW</span><b>' + p.newq[0] + '</b>' + p.newq[1];
+  sec.appendChild(nd);
+
+  addList(sec, 'Common exam mistakes', p.mistakes);
+  addViva(sec, 'Important viva questions', p.viva);
+  addList(sec, 'Fast revision sheet', p.revision);
+
+  main.appendChild(sec);
+});
+
+function fallbackCopy(text, done){
+  try{
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    done();
+  }catch(e){
+    console.error('Copy failed', e);
+  }
+}
+</script>
+</body>
+</html>
